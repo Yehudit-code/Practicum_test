@@ -97,6 +97,22 @@ const play = async (req, res) => {
             // winnerSteps = me.steps;
             me.active = false;
             other.active = false;
+
+            const win1 = player === "player1" ? true : false;
+            const win2 = player === "player2" ? true : false;
+            const logLine = `
+USER1: ${play.player1.name}
+WIN: ${win1}
+USER2: ${play.player2.name}
+WIN: ${win2}
+DATE: ${new Date().toLocaleString()}
+------------------------------
+`;
+            fs.appendFile(
+                path.join(__dirname, '..', 'games.log'),
+                logLine,
+                err => { if (err) console.error('שגיאה בכתיבת לוג:', err) }
+            );
         } else {
             // הפעל-נטרל תור
             me.active = false;
@@ -121,4 +137,4 @@ const play = async (req, res) => {
 }
 
 
-module.exports = { startGame,play }
+module.exports = { startGame, play }
